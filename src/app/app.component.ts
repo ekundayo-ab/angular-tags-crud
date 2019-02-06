@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { tagsToString, stripAndFilterTags } from './definitions';
+import { tagsToString, stripAndFilterTags, defaultTags } from './definitions';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +17,8 @@ export class AppComponent implements OnInit {
     const tagsInLS = localStorage.getItem('tags');
     if (tagsInLS) {
       this.tags = stripAndFilterTags(tagsInLS);
+    } else {
+      this.tags = stripAndFilterTags(defaultTags);
     }
   }
 
@@ -26,13 +28,27 @@ export class AppComponent implements OnInit {
   }
 
   addTags(tags: number[]) {
-    this.tags = tags;
+    let tagsToAdd = this.tags;
+    tagsToAdd = tagsToAdd.concat(tags);
 
-    localStorage.setItem('tags', tagsToString(tags));
+    const tagsInHash = {};
 
-    if (this.modalIsActive) {
+    tagsToAdd.forEach((tag) => {
+      tagsInHash[`tag-${tag}`] = tag;
+    });
+    this.tags = Object.values(tagsInHash);
+
+    this.persistToLS();
+
+    if (this.editMode) {
       this.closeModal();
+      this.editMode = false;
     }
+  }
+
+  deleteTag(tagToDelete: number) {
+    this.tags = this.tags.filter(tag => tag !== tagToDelete);
+    this.persistToLS();
   }
 
   closeModal() {
@@ -41,5 +57,9 @@ export class AppComponent implements OnInit {
 
   openModal() {
     this.modalIsActive = true;
+  }
+
+  persistToLS() {
+    localStorage.setItem('tags', tagsToString(this.tags));
   }
 }

@@ -7,7 +7,7 @@
       'has-text-link': tag < 0
     }">
     {{tag}}
-    <button class="delete is-small"></button>
+    <button (click)="setTagToDelete(tag)" class="delete is-small"></button>
   </span>
 </div>
 

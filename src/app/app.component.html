@@ -22,7 +22,7 @@
 
 <div class="columns">
   <div class="column is-mobile is-half is-offset-one-quarter has-background-white-ter">
-    <app-tag-list [tags]="tags"></app-tag-list>
+    <app-tag-list (deleteTag)="deleteTag($event)" [tags]="tags"></app-tag-list>
   </div>
 </div>
 
