@@ -11,34 +11,37 @@
     </div>
   </div>
 </section>
+
 <hr>
+
 <div class="columns">
   <div class="column is-mobile is-half is-offset-one-quarter has-background-white-ter">
-    <div class="field">
-      <div class="control">
-        <textarea
-          class="textarea is-info"
-          placeholder="Enter tags separated with comma, semicolon or line break"></textarea>
-        <br />
-        <button class="button is-info">Add Tag(s)</button>
-      </div>
-    </div>
+    <app-tag-form (addTags)="addTags($event)"></app-tag-form>
   </div>
 </div>
 
 <div class="columns">
   <div class="column is-mobile is-half is-offset-one-quarter has-background-white-ter">
-    <div class="tags has-addons">
-      <span class="tag is-black is-medium">
-        Hello
-        <button class="delete is-small"></button>
-      </span>
-    </div>
+    <app-tag-list [tags]="tags"></app-tag-list>
   </div>
 </div>
 
 <div class="columns">
   <div class="column is-mobile is-half is-offset-one-quarter">
-    <button class="button is-info">Edit Tag(s)</button>
+    <button class="button is-info" (click)="editTags()">Edit Tag(s)</button>
   </div>
+</div>
+
+<div #modal *ngIf="modalIsActive" class="modal is-active">
+  <div class="modal-background" (click)="closeModal()"></div>
+  <div class="modal-content">
+      <div class="box">
+        <app-tag-form
+          (addTags)="addTags($event)"
+          [tagsToEdit]="tagsToString(tags)"
+          [editMode]="editMode">
+        </app-tag-form>
+      </div>
+  </div>
+  <button (click)="closeModal()" class="modal-close is-large" aria-label="close"></button>
 </div>

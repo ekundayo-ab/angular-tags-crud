@@ -1,0 +1,16 @@
+<div *ngIf="tags.length; else noTags" class="tags ">
+  <span
+    *ngFor="let tag of tags"
+    class="tag is-black is-medium"
+    [ngClass]="{
+      'has-text-danger': tag >= 0,
+      'has-text-link': tag < 0
+    }">
+    {{tag}}
+    <button class="delete is-small"></button>
+  </span>
+</div>
+
+<ng-template #noTags>
+  <span class="has-text-info">No tags added!</span>
+</ng-template>

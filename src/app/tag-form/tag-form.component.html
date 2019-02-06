@@ -1,0 +1,13 @@
+<form [formGroup]="tagForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <div class="control">
+      <textarea
+        class="textarea is-info"
+        placeholder="Enter tags separated with comma, semicolon or line break"
+        formControlName="tags"
+        ></textarea>
+      <br />
+      <button type="submit" class="button is-info">{{ editMode ? 'Save' : 'Add Tag(s)'}}</button>
+    </div>
+  </div>
+</form>
